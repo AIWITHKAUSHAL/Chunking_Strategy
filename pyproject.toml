@@ -1,0 +1,70 @@
+[project]
+name = "chunking-lab"
+version = "1.0.0"
+description = "Four chunking strategies benchmarked on one document with a live RAG retrieval visualizer."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.40.0",
+    "numpy>=1.26.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.6.0", "pytest>=8.0.0"]
+
+[project.scripts]
+chunking-lab = "chunking_lab.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "app", "tests"]
+extend-exclude = ["docs"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "D",   # pydocstyle -- enforces the docstring-on-every-file requirement
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "C4",  # flake8-comprehensions
+    "RET", # flake8-return
+    "PTH", # flake8-use-pathlib
+    "ARG", # unused arguments
+    "N",   # pep8-naming
+]
+ignore = [
+    "D203", # conflicts with D211
+    "D213", # conflicts with D212
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["chunking_lab", "app"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D103"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
