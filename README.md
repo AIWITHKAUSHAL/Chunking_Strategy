@@ -18,7 +18,9 @@ The point of the experiment is a single controlled claim:
 ```bash
 git clone <this-repo> && cd Chunking_Strategies
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements-dev.txt
+python -m ensurepip --upgrade
+python -m pip install -r requirements-dev.txt
+python -m pip install -e .
 
 cp .env.example .env            # add your EURI_API_KEY
 python -m chunking_lab.cli doctor     # verifies the key, the models and the gold labels
@@ -352,7 +354,7 @@ Both models are reached through the Euron gateway with the OpenAI-compatible cli
 
 ```python
 client = OpenAI(api_key=os.environ["EURI_API_KEY"], base_url="https://api.euron.one/api/v1/euri")
-client.embeddings.create(model="gemini-embedding-001", input=[...])          # 3072-dim vectors
+client.embeddings.create(model="gemini-embedding-001", input=[...])  # 3072-dim vectors
 client.chat.completions.create(model="gemini-3.5-flash-lite", messages=[...])
 ```
 
